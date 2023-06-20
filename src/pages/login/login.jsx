@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Form, Input, message } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { useNavigate, Routes, Route, Navigate } from 'react-router-dom'
-import logo from './images/logo.png'
+import logo from '../../assets/images/logo.png'
 import './login.less'
 import { reqLogin } from '../../api'
 import memoryUtils from '../../utils/memoryUtils'
