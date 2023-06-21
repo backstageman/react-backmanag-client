@@ -1,10 +1,13 @@
 import React from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
-import { message, Layout, Space } from 'antd'
+import { Routes, Route, Navigate, Outlet } from 'react-router-dom'
+import { message, Layout } from 'antd'
 import memoryUtils from '../../utils/memoryUtils'
 import Header from '../../components/Header'
 import LeftNav from '../../components/LeftNav'
 import './index.less'
+
+
+
 const { Footer, Sider, Content } = Layout;
 
 const Admin = () => {
@@ -23,11 +26,13 @@ const Admin = () => {
       <Sider >
         <LeftNav />
       </Sider>
-      <Layout> 
-        <Header className="header" >Header</Header>
-        <Content >Content</Content>
+      <Layout>
+        <Header>Header</Header>
+        <Content >
+          <Outlet />
+        </Content>
         <Footer className='footer'>
-          推荐使用谷歌浏览器，以获得更加的体验。&copy;XX后台管理系统所有
+          推荐使用谷歌浏览器，可以获得更佳的页面操作体验。&copy;XX后台管理系统所有
         </Footer>
       </Layout>
     </Layout>

@@ -1,47 +1,54 @@
-import React, { useState } from "react";
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from 'react-router-dom'
 import { Menu } from 'antd';
-import {
-  AppstoreOutlined,
-  ContainerOutlined,
-  MenuFoldOutlined,
-  PieChartOutlined,
-  DesktopOutlined,
-  MailOutlined,
-} from '@ant-design/icons';
 import logo from '../../assets/images/logo.png'
 import './index.less'
+import menuConfig from '../../config/menuConfig'
 
-function getItem(label, key, icon, children, type) {
-  return {
-    label,
-    key,
-    icon,
-    children,
-    type,
-  };
-}
+const LeftNav = () => {
+  const [items, setItems] = useState([])
+  const [defaultOpenKeys, setDefaultOpenKeys] = useState([])
+  // 获取当前的路由location对象
+  const location = useLocation()
+  let openKey = []
+  useEffect(() => {
+    // 初始化设置菜单项
+    setItems(createMenuList(menuConfig))
+  }, [])
 
-const items = [
-  getItem('Option 1', '1', <PieChartOutlined />),
-  getItem('Option 2', '2', <DesktopOutlined />),
-  getItem('Option 3', '3', <ContainerOutlined />),
-  getItem('Navigation One', 'sub1', <MailOutlined />, [
-    getItem('Option 5', '5'),
-    getItem('Option 6', '6'),
-    getItem('Option 7', '7'),
-    getItem('Option 8', '8'),
-  ]),
-  getItem('Navigation Two', 'sub2', <AppstoreOutlined />, [
-    getItem('Option 9', '9'),
-    getItem('Option 10', '10'),
-    getItem('Submenu', 'sub3', null, [getItem('Option 11', '11'), getItem('Option 12', '12')]),
-  ]),
-  { label: "Option 11", key:"11", icon:< MenuFoldOutlined />}
-];
+  // 使用数组的map方法生成菜单item项
+  /* const createMenuList = (menuConfig) => {
+     return menuConfig.map(item => {
+       if (item.children && item.children.length) {
+         return {
+           label: item.title,
+           key: item.key, icon: item.icon, children: createMenuList(item.children)
+         }
+       } else {
+         return { label: <Link to={item.key}>{item.title}</Link>, key: item.key, icon: item.icon }
+       }
+     })
+   } */
 
-export default function LeftNav() {
-  const [collapsed, setCollapsed] = useState(false);
+  // 使用数组的reduce方法生成菜单item项
+  const createMenuList = (menuConfig) => {
+    return menuConfig.reduce((pre, current) => {
+      if (current.children && current.children.length) {
+        // 查找与当前路径匹配的子菜单项
+        const cItem = current.children.find(cItem => cItem.key === location.pathname)
+        cItem && (openKey.push(cItem.parent))
+        console.log("openkey", openKey)
+        pre.push({
+          label: current.title,
+          key: current.key, icon: current.icon, children: createMenuList(current.children)
+        })
+      } else {
+        pre.push({ label: <Link to={current.key}>{current.title}</Link>, key: current.key, icon: current.icon })
+      }
+      return pre
+    }, [])
+  }
+
   return (
     <>
       <div className="left-nav">
@@ -52,14 +59,15 @@ export default function LeftNav() {
           </header>
         </Link>
         <Menu
-          defaultSelectedKeys={['1']}
-          defaultOpenKeys={['sub1']}
+          selectedKeys={[location.pathname]}
+          defaultOpenKeys={openKey}
           mode="inline"
           theme="dark"
-          inlineCollapsed={collapsed}
           items={items}
         />
       </div>
     </>
   )
 }
+
+export default LeftNav
