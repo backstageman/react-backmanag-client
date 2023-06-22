@@ -28,7 +28,7 @@ const Admin = () => {
       </Sider>
       <Layout>
         <Header>Header</Header>
-        <Content >
+        <Content style={{margin: "15px", backgroundColor: "#fff"}}>
           <Outlet />
         </Content>
         <Footer className='footer'>

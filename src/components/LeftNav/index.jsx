@@ -7,7 +7,6 @@ import menuConfig from '../../config/menuConfig'
 
 const LeftNav = () => {
   const [items, setItems] = useState([])
-  const [defaultOpenKeys, setDefaultOpenKeys] = useState([])
   // 获取当前的路由location对象
   const location = useLocation()
   let openKey = []
@@ -37,7 +36,7 @@ const LeftNav = () => {
         // 查找与当前路径匹配的子菜单项
         const cItem = current.children.find(cItem => cItem.key === location.pathname)
         cItem && (openKey.push(cItem.parent))
-        console.log("openkey", openKey)
+        // console.log("openkey", openKey)
         pre.push({
           label: current.title,
           key: current.key, icon: current.icon, children: createMenuList(current.children)
