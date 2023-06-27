@@ -16,3 +16,10 @@ export const reqAddUser = (user) => ajax('/manage/user/add', user, 'POST')
 export const reqWeather = (key = "4d99be79572df9b72cd339db0d22fad7", cityAdcode = "310104") => ajax("https://restapi.amap.com/v3/weather/weatherInfo?parameters", { key, city: cityAdcode }, "GET")
 
 // 获取当前的城市
+
+// 获取分类列表
+export const reqCategorys = (parentId) => ajax('/manage/category/list', { parentId })
+// 添加分类
+export const reqAddCategory = (parentId, categoryName) => ajax('/manage/category/add', { parentId: parentId, categoryName: categoryName }, "POST")
+// 更新分类
+export const reqUpdateCategory = ({ categoryId, categoryName }) => ajax('/manage/category/update', { categoryId, categoryName }, "POST")
