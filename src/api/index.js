@@ -4,6 +4,7 @@
   每个函数的返回值都是promise
 */
 import ajax from "./ajax";
+const BASE = ''
 
 // 登陆
 export const reqLogin = (username, password) => ajax('/login', { username, password }, 'POST')
@@ -23,3 +24,11 @@ export const reqCategorys = (parentId) => ajax('/manage/category/list', { parent
 export const reqAddCategory = (parentId, categoryName) => ajax('/manage/category/add', { parentId: parentId, categoryName: categoryName }, "POST")
 // 更新分类
 export const reqUpdateCategory = ({ categoryId, categoryName }) => ajax('/manage/category/update', { categoryId, categoryName }, "POST")
+
+// 获取商品分页列表
+export const reqGetProducts = (pageNum, pageSize) => ajax(`/api1/manage/product/list`, { pageNum, pageSize })
+
+// 搜索获取商品列表
+export const reqQueryProducts = ({ pageNum, pageSize, searchValue, searchType }) => ajax(`/api1/manage/product/search`, {
+  pageNum, pageSize, [searchType]: searchValue
+})
