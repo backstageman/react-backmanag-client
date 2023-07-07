@@ -4,7 +4,6 @@ import { Card, Button, Select, Input } from 'antd'
 /* 
   商品新增、更新
 */
-
 const { Option } = Select
 
 export default function ProductAdd() {

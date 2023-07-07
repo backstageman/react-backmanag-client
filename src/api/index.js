@@ -32,3 +32,13 @@ export const reqGetProducts = (pageNum, pageSize) => ajax(`/api1/manage/product/
 export const reqQueryProducts = ({ pageNum, pageSize, searchValue, searchType }) => ajax(`/api1/manage/product/search`, {
   pageNum, pageSize, [searchType]: searchValue
 })
+
+// 根据分类ID获取分类
+export const reqGetCategoryNameById = (categoryId) => ajax('/api1/manage/category/info', {
+  categoryId
+})
+
+// 商品上架、下架
+export const reqUpdataStatus = (productId, status) => ajax("/api1/manage/product/updateStatus", {
+  productId, status
+}, "POST")
