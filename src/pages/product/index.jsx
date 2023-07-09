@@ -123,6 +123,11 @@ export default function Product() {
     ])
   }
 
+  const goToAddPage = () => {
+    // 跳转到商品添加页
+    navigate("add")
+  }
+
   return (
     <Card title={
       <>
@@ -136,7 +141,7 @@ export default function Product() {
         <Button type="primary" onClick={(event) => getProducts(pageNum, pageSize)}>搜索</Button>
       </>
     }
-      extra={<Button icon={<PlusOutlined />} type="primary">添加商品</Button>}
+      extra={<Button icon={<PlusOutlined />} type="primary" onClick={goToAddPage}>添加商品</Button>}
     >
       <Table
         bordered

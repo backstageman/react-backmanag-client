@@ -8,13 +8,22 @@ import menuConfig from '../../config/menuConfig'
 const LeftNav = () => {
   const [items, setItems] = useState([])
   // 获取当前的路由location对象
-  const location = useLocation()
+  const { pathname } = useLocation()
+  let selectedKeys = []
   let openKey = []
+  
   useEffect(() => {
     // 初始化设置菜单项
     setItems(createMenuList(menuConfig))
+    setSelectedKeys(pathname)
   }, [])
 
+  const setSelectedKeys = (pathname) => {
+    if (pathname.includes("/product")) {
+      selectedKeys.push("/product")
+    }
+    // console.log("selectedKeys ", selectedKeys)
+  }
   // 使用数组的map方法生成菜单item项
   /* const createMenuList = (menuConfig) => {
      return menuConfig.map(item => {
@@ -34,7 +43,7 @@ const LeftNav = () => {
     return menuConfig.reduce((pre, current) => {
       if (current.children && current.children.length) {
         // 查找与当前路径匹配的子菜单项
-        const cItem = current.children.find(cItem => cItem.key === location.pathname)
+        const cItem = current.children.find(cItem => pathname.includes(cItem.key))
         cItem && (openKey.push(cItem.parent))
         // console.log("openkey", openKey)
         pre.push({
@@ -58,7 +67,9 @@ const LeftNav = () => {
           </header>
         </Link>
         <Menu
-          selectedKeys={[location.pathname]}
+          // selectedKeys={[location.pathname]}
+          // selectedKeys={selectedKeys}
+          defaultSelectedKeys={selectedKeys}
           defaultOpenKeys={openKey}
           mode="inline"
           theme="dark"

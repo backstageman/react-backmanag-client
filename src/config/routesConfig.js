@@ -43,7 +43,7 @@ export default [
         element: <ProductDetail />,
       },
       {
-        path: "/category",
+        path: "category",
         element: <Category />,
       },
       {
